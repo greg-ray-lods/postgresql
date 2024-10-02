@@ -1,0 +1,42 @@
+# Variables
+$resourceGroup = "RG1"
+$location = "East US"
+$vmName = "myVM"
+$adminUser = "azureuser"
+$password = "abcd1234ABCD"
+$vmSize = "Standard_D2s_v3"
+
+# Step 1: Create Resource Group
+New-AzResourceGroup -Name $resourceGroup -Location $location
+
+# Step 2: Create Virtual Machine
+$vmParams = @{
+    ResourceGroupName = $resourceGroup
+    Name              = $vmName
+    Image             = 'UbuntuLTS'
+    Location          = $location
+    Size              = $vmSize
+    Credential        = $password
+}
+
+New-AzVM @vmParams
+
+# Step 3: Open Port for PostgreSQL Access (if needed)
+Get-AzNetworkSecurityGroup -ResourceGroupName $resourceGroup |
+    Get-AzNetworkSecurityRuleConfig |
+    Set-AzNetworkSecurityRuleConfig -Name 'Allow-PostgreSQL' -Access Allow -Protocol Tcp -Direction Inbound -Priority 1001 -SourceAddressPrefix * -SourcePortRange * -DestinationAddressPrefix * -DestinationPortRange 5432 |
+    Set-AzNetworkSecurityGroup
+
+# Step 4: Install PostgreSQL and Restore Northwind Database Using Custom Script Extension
+Set-AzVMExtension -ResourceGroupName $resourceGroup `
+    -VMName $vmName `
+    -Name 'installPostgres' `
+    -Publisher 'Microsoft.Azure.Extensions' `
+    -ExtensionType 'CustomScript' `
+    -TypeHandlerVersion '2.1' `
+    -Settings '{"fileUris":[], "commandToExecute":"sudo apt-get update && sudo apt-get install -y wget && wget -qO - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add - && sudo sh -c '\''echo \"deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main\" > /etc/apt/sources.list.d/pgdg.list'\'' && sudo apt-get update && sudo apt-get install -y postgresql-16 && sudo systemctl start postgresql && wget https://github.com/pthom/northwind_psql/raw/master/northwind.sql && sudo -u postgres psql -f northwind.sql"}'
+
+# Output the public IP and SSH connection command
+$publicIP = (Get-AzPublicIpAddress -ResourceGroupName $resourceGroup -Name "${vmName}PublicIP").IpAddress
+Write-Output "PostgreSQL installed. You can connect to the VM via SSH using:"
+Write-Output "ssh $adminUser@$publicIP"
