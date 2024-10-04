@@ -1,0 +1,92 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "value": "eastus"
+    },
+    "networkInterfaceName1": {
+      "value": "vmtest685_z1"
+    },
+    "enableAcceleratedNetworking": {
+      "value": true
+    },
+    "networkSecurityGroupName": {
+      "value": "vmtest-nsg"
+    },
+    "networkSecurityGroupRules": {
+      "value": [
+        {
+          "name": "TCP_22",
+          "properties": {
+            "priority": 1010,
+            "protocol": "TCP",
+            "access": "Allow",
+            "direction": "Inbound",
+            "sourceAddressPrefix": "*",
+            "sourcePortRange": "*",
+            "destinationAddressPrefix": "*",
+            "destinationPortRange": "22"
+          }
+        }
+      ]
+    },
+    "subnetName": {
+      "value": "default"
+    },
+    "virtualNetworkId": {
+      "value": "/subscriptions/14eb64ec-fe01-406d-8f38-2ef5c5b142be/resourceGroups/RG1lod44529442/providers/Microsoft.Network/virtualNetworks/myVm-vnet"
+    },
+    "publicIpAddressName1": {
+      "value": "vmtest-ip"
+    },
+    "publicIpAddressType": {
+      "value": "Static"
+    },
+    "publicIpAddressSku": {
+      "value": "Standard"
+    },
+    "pipDeleteOption": {
+      "value": "Delete"
+    },
+    "virtualMachineName": {
+      "value": "vmtest"
+    },
+    "virtualMachineName1": {
+      "value": "vmtest"
+    },
+    "virtualMachineComputerName1": {
+      "value": "vmtest"
+    },
+    "virtualMachineRG": {
+      "value": "RG1lod44529442"
+    },
+    "osDiskType": {
+      "value": "Premium_LRS"
+    },
+    "osDiskDeleteOption": {
+      "value": "Delete"
+    },
+    "virtualMachineSize": {
+      "value": "Standard_D4s_v3"
+    },
+    "nicDeleteOption": {
+      "value": "Delete"
+    },
+    "hibernationEnabled": {
+      "value": false
+    },
+    "adminUsername": {
+      "value": "azureadmin"
+    },
+    "adminPassword": {
+      "value": "abcd1234ABCD"
+    },
+    "customData": {
+      "value": "IyEvYmluL2Jhc2gNCg0KIyBVcGRhdGUgdGhlIHBhY2thZ2UgbGlzdA0Kc3VkbyBhcHQgdXBkYXRlIC15DQoNCiMgSW5zdGFsbCBQb3N0Z3JlU1FMIDE2IGFuZCByZWxhdGVkIHRvb2xzDQpzdWRvIGFwdCBpbnN0YWxsIC15IHBvc3RncmVzcWwtMTYgcG9zdGdyZXNxbC1jbGllbnQtMTYgd2dldA0KDQojIFN0YXJ0IFBvc3RncmVTUUwgc2VydmljZQ0Kc3VkbyBzeXN0ZW1jdGwgZW5hYmxlIHBvc3RncmVzcWwNCnN1ZG8gc3lzdGVtY3RsIHN0YXJ0IHBvc3RncmVzcWwNCg0KIyBEb3dubG9hZCBBZHZlbnR1cmVXb3JrcyBzYW1wbGUgZGF0YWJhc2UgZm9yIFBvc3RncmVTUUwNCndnZXQgaHR0cHM6Ly9naXRodWIuY29tL3B0aG9tL25vcnRod2luZF9wc3FsL3Jhdy9tYXN0ZXIvbm9ydGh3aW5kLnNxbA0KDQojIFN3aXRjaCB0byB0aGUgcG9zdGdyZXMgdXNlciBhbmQgY3JlYXRlIHRoZSBhZHZlbnR1cmV3b3JrcyBkYXRhYmFzZQ0Kc3VkbyAtdSBwb3N0Z3JlcyBwc3FsIC1jICJDUkVBVEUgREFUQUJBU0UgYWR2ZW50dXJld29ya3M7Ig0KDQojIFJlc3RvcmUgdGhlIGRvd25sb2FkZWQgQWR2ZW50dXJlV29ya3MgZGF0YWJhc2UNCnN1ZG8gLXUgcG9zdGdyZXMgcHNxbCAtZCBhZHZlbnR1cmV3b3JrcyAtZiBub3J0aHdpbmQuc3FsDQoNCiMgQ2xlYW4gdXAgZG93bmxvYWRlZCBmaWxlcw0Kcm0gbm9ydGh3aW5kLnNxbA0KDQojIFJlc3RhcnQgUG9zdGdyZVNRTCBzZXJ2aWNlIHRvIGFwcGx5IGNoYW5nZXMNCnN1ZG8gc3lzdGVtY3RsIHJlc3RhcnQgcG9zdGdyZXNxbA0K"
+    },
+    "virtualMachine1Zone": {
+      "value": "1"
+    }
+  }
+}
